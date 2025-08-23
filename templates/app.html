@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AutoValue - Car Price Prediction</title>
+    <style>
+        :root {
+            --primary-color: #548dc6ff;
+            --secondary-color: #3498db;
+            --third-color: #1fbc78ff;
+            --accent-color: #23bdbdff;
+            --light-gray: #f5f7fa;
+            --dark-gray: #0f3359ff;
+            --shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        body {
+             background: linear-gradient(135deg, var(--primary-color), var(--third-color));
+            color: var(--dark-gray);
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 40px auto;
+            background: white;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+        }
+
+        header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: whit;
+            padding: 30px 20px;
+            text-align: center;
+        }
+
+        header h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        header p {
+            font-weight: 300;
+            opacity: 0.9;
+        }
+
+        .main-content {
+            padding: 30px;
+        }
+
+        .car-image {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-radius: 8px;
+            margin-bottom: 30px;
+            box-shadow: var(--shadow);
+        }
+
+        .form-container {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group.full-width {
+            grid-column: span 2;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: var(--dark-gray);
+        }
+
+        input,
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 16px;
+            transition: all 0.3s;
+        }
+
+        input:focus,
+        select:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.2);
+        }
+
+        .btn {
+            background-color: var(--accent-color);
+            color: white;
+            border: none;
+            padding: 15px;
+            font-size: 18px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s;
+            width: 100%;
+            grid-column: span 2;
+        }
+
+        .btn:hover {
+            background-color: #29ba6dff;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(231, 76, 60, 0.3);
+        }
+
+        .result-container {
+            margin-top: 30px;
+            padding: 25px;
+            background-color: rgba(52, 152, 219, 0.1);
+            border-radius: 8px;
+            text-align: center;
+            display: none;
+        }
+
+        .result-title {
+            color: var(--primary-color);
+            margin-bottom: 15px;
+            font-size: 1.5rem;
+        }
+
+        .predicted-price {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--accent-color);
+            margin-bottom: 10px;
+        }
+
+        .disclaimer {
+            font-size: 0.9rem;
+            color: #666;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            padding: 15px;
+            background-color: #f9f9f9;
+            border: 1px solid #ddd;
+            border-radius: 6px;
+        }
+        .row {
+            
+            height:50px;
+            
+        }
+        # P{
+            color: #1c1111ff;
+        }
+
+        .instructions h3 {
+            margin-bottom: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .form-container {
+                grid-template-columns: 1fr;
+            }
+
+            .form-group.full-width {
+                grid-column: span 1;
+            }
+
+            .btn {
+                grid-column: span 1;
+            }
+
+            header h1 {
+                font-size: 2rem;
+            }
+
+            .predicted-price {
+                font-size: 2.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>AutoValue Price Predictor</h1>
+            <p>Get an instant and accurate estimate of your car's market value</p>
+        </header>
+
+        <div class="main-content">
+            <img src="https://placehold.co/800x300?text=Luxury+Car+Showroom" 
+                 alt="Professional car showroom displaying premium vehicles under bright lighting" 
+                 class="car-image">
+
+            <form id="carPredictionForm",method="post",accept-charset="utf-8">
+                <div class="form-container">
+                    <div class="form-group">
+                        <label for="carCompany">Select Car Company & model</label>
+                        <select id="carCompany" name="name" required="1">
+                            <option value="">Select Company</option>
+
+                            {% for name in name %}
+                             
+                             <option value= "{{name}}">{{name}}</option>
+                             {% endfor %}
+                         
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="year">Manufacturing Year</label>
+                        <select id="year" name="year" required>
+                            <option value="">Select Year</option>
+                           {% for year in year %}
+                             
+                             <option value= "{{year}}">{{year}}</option>
+                             {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="kmDriven">Kilometers Driven</label>
+                        <input type="number" id="kmDriven" name="km_driven" placeholder="e.g. 35000" min="0" required>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="fuelType">Fuel Type</label>
+                        <select id="fuelType" name="fuel" required='1'>
+                            <option value="">Select Fuel Type</option>
+                           {% for Company in fuel %}
+                             
+                             <option value= "{{Company}}">{{Company}}</option>
+                             {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="sellerType">Seller Type</label>
+                        <select id="sellerType" name="seller_type" required="1">
+                            <option value="">Select Seller Type</option>
+                             {% for Company in seller_type %}
+                             
+                             <option value= "{{Company}}">{{Company}}</option>
+                             {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="transmission">Transmission</label>
+                        <select id="transmission"name="transmission" required>
+                            <option value="">Select Transmission</option>
+                             {% for Company in transmission %}
+                             
+                             <option value= "{{Company}}">{{Company}}</option>
+                             {% endfor %}
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="owner">Owner</label>
+                        <select id="owner" name="owner" required>
+                            <option value="">Select Owner</option>
+                             {% for Company in owner %}
+                             
+                             <option value= "{{Company}}">{{Company}}</option>
+                             {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <button type="button" id="predictBtn" class="btn btn-primary form-control">Predict Price</button>
+            </form>
+            <br>
+            <div class="row">
+                <div class="col-12" style="text-align: center">
+                    <h3><span id="P"></span>
+
+                    </h3>
+
+                </div>
+            </div>
+            
+            
+            <div class="result-container" id="result" style="display:none;">
+              <h2 class="result-title">Estimated Market Value</h2>
+              <div class="predicted-price" id="predictedPrice"></div>
+              <p class="disclaimer">Based on current market data and historical trends</p>
+            </div>
+        
+        
+
+            <div class="instructions">
+                <h3>How to Use This Tool</h3>
+                <p>Fill in the details about your car in the form above. Make sure to provide accurate information to get the best estimate of your car's value.</p>
+                <p>For example:</p>
+                <ul>
+                    <li><strong>Car Company:</strong> Choose the brand of your car.</li>
+                    <li><strong>Manufacturing Year:</strong> Select the year your car was manufactured.</li>
+                    <li><strong>Kilometers Driven:</strong> Enter the total kilometers your car has been driven.</li>
+                    <li><strong>Fuel Type:</strong> Select the type of fuel your car uses.</li>
+                    <li><strong>Seller Type:</strong> Indicate whether you are selling as an individual or a dealer.</li>
+                    <li><strong>Transmission:</strong> Choose between manual or automatic transmission.</li>
+                    <li><strong>Owner:</strong> Select how many previous owners the car has had.</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+
+<script>
+document.getElementById('predictBtn').addEventListener("click", send_data);
+
+function form_handler(event) {
+    event.preventDefault();
+}
+function send_data() {
+    document.querySelector('form').addEventListener('submit', form_handler);
+    var fd = new FormData(document.querySelector('form'));
+    var request = new XMLHttpRequest();
+    request.open('POST', '/predict', true);
+    document.getElementById('P').innerHTML = "Prediction";
+    request.onreadystatechange = function() {
+        if (request.readyState === XMLHttpRequest.DONE) {
+            if (request.status === 200) {
+                document.getElementById("predictedPrice").innerHTML = "Rs " + request.responseText;
+                document.getElementById("result").style.display = "block"; // Show the result container
+            } else {
+                document.getElementById("P").innerHTML = "Error in prediction. Please try again.";
+            }
+        }
+    };
+    request.send(fd);
+}
+</script>
+    
+</body>
+</html>
