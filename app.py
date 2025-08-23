@@ -4,7 +4,7 @@ import pickle
 
 app = Flask(__name__)
 
-model = pickle.load(open("LinearRegression.pkl", 'rb'))
+model = pickle.load(open("C:\\Users\\sumit\\Desktop\\github_project\\ss_projects\\LinearRegression.pkl", 'rb'))
 
 datas = pd.read_csv("c:\\Users\\sumit\\Documents\\cleaned_car_data\\cleaned_data.csv")
 print(datas)
@@ -40,7 +40,7 @@ def predict():
     input_df = pd.DataFrame([[name, year, km_driven, fuel, seller_type, transmission, owner]],
                             columns=['name', 'year', 'km_driven', 'fuel', 'seller_type', 'transmission', 'owner'])
     prediction = model.predict(input_df)[0]
-    print(prediction)
+    
     return str(int(prediction))  # Return only the value for AJAX
 
 if __name__ == "__main__":
