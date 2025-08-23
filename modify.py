@@ -43,23 +43,3 @@ prediction= pipe.predict(pd.DataFrame([['Maruti 800 AC',2007,200000,'Petrol','In
   columns=['name','year','km_driven','fuel','seller_type','transmission','owner']))
 
 print(prediction)
-
-
-# L_model.fit(X_train,Y_train)
-
-# predict= L_model.predict(X_train)
-
-# accuracy= metrics.r2_score(Y_train,predict)
-
-# print("accuracy_score", accuracy)
-
-# plt.scatter(Y_train,predict)
-# plt.xlabel("actual")
-# plt.ylabel("predicted")
-# # plt.show()
-
-# print(X_train.head())
-# input_data= pd.DataFrame([[2017,700000,0,0,0,0]],columns=["year","km_driven","fuel","seller_type","transmission","owner"])
-
-
-# print(L_model.predict(input_data))
